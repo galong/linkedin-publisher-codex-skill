@@ -1,5 +1,7 @@
 # LinkedIn Publisher Codex Skill
 
+[中文文档](README.zh-CN.md)
+
 `linkedin-publisher` is a Codex skill for preparing, previewing, and publishing LinkedIn personal profile posts through the LinkedIn Posts API.
 
 It supports:
