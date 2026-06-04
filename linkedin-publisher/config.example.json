@@ -1,0 +1,10 @@
+{
+  "client_id": "your-linkedin-client-id",
+  "client_secret": "your-linkedin-client-secret",
+  "redirect_uri": "http://localhost:8080/callback",
+  "api_version": "202605",
+  "person_id": "your-linkedin-person-id",
+  "preview_name": "Your Name",
+  "preview_headline": "Your LinkedIn headline",
+  "token_file": "~/.config/linkedin-publisher/token.json"
+}

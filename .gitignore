@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+
+.linkedin/
+posts/
+previews/
+*.log
+*.tmp
+*.preview.json
+
+__pycache__/
+*.py[cod]
+.DS_Store
