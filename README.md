@@ -2,13 +2,14 @@
 
 [中文文档](README.zh-CN.md)
 
-`linkedin-publisher` is a Codex skill for preparing, previewing, and publishing LinkedIn personal profile posts through the LinkedIn Posts API.
+`linkedin-publisher` is a Codex skill for formatting, preparing, previewing, and publishing LinkedIn personal profile posts through the LinkedIn Posts API.
 
 It supports:
 
 - personal LinkedIn profile posts
 - text posts
 - single-image posts
+- Markdown/plain-text to LinkedIn-safe formatting
 - OAuth setup helpers
 - local LinkedIn-style HTML previews
 - safe publish confirmation through `--publish --yes`
@@ -108,6 +109,26 @@ Use the returned `sub` value as `--person-id`, or use the returned `person_urn` 
 
 If you save `person_id` in `~/.config/linkedin-publisher/config.json`, future publish commands do not need `--person-id`.
 
+## Format
+
+Format Markdown or plain text before previewing:
+
+```bash
+python3 linkedin-publisher/scripts/linkedin_format.py \
+  --text-file "./draft.md" \
+  --mode standard \
+  --output "./posts/linkedin-ready.md" \
+  --report
+```
+
+Formatting modes:
+
+- `light`: clean Markdown and spacing without Unicode styling
+- `standard`: restrained LinkedIn styling for most professional posts
+- `strong`: more visual structure when explicitly requested
+
+The formatter does not call LinkedIn APIs and does not read token files.
+
 ## Preview
 
 Create a text-only API preview:
@@ -166,8 +187,10 @@ linkedin-publisher/
 ├── SKILL.md
 ├── agents/openai.yaml
 ├── references/linkedin_api.md
+├── references/linkedin_formatting.md
 └── scripts/
     ├── linkedin_auth.py
+    ├── linkedin_format.py
     ├── linkedin_preview_html.py
     └── linkedin_publish.py
 ```

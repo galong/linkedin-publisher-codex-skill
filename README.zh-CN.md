@@ -1,12 +1,13 @@
 # LinkedIn Publisher Codex Skill
 
-`linkedin-publisher` 是一个 Codex Skill，用于在 Codex 中准备、预览并通过 LinkedIn Posts API 发布个人 LinkedIn 动态。
+`linkedin-publisher` 是一个 Codex Skill，用于在 Codex 中排版、准备、预览并通过 LinkedIn Posts API 发布个人 LinkedIn 动态。
 
 它支持：
 
 - 发布到个人 LinkedIn 账号
 - 纯文字动态
 - 单张图片动态
+- Markdown/普通文本转 LinkedIn 安全排版
 - OAuth 授权辅助
 - 本地 LinkedIn 风格 HTML 可视化预览
 - 通过 `--publish --yes` 做发布确认，避免误发
@@ -106,6 +107,26 @@ python3 linkedin-publisher/scripts/linkedin_auth.py userinfo
 
 如果你把 `person_id` 保存到 `~/.config/linkedin-publisher/config.json`，之后发布时就不需要再传 `--person-id`。
 
+## 排版
+
+在预览前，可以先把 Markdown 或普通文本整理成 LinkedIn 可直接发布的纯文本：
+
+```bash
+python3 linkedin-publisher/scripts/linkedin_format.py \
+  --text-file "./draft.md" \
+  --mode standard \
+  --output "./posts/linkedin-ready.md" \
+  --report
+```
+
+排版模式：
+
+- `light`：只清理 Markdown 和空行，不做 Unicode 样式
+- `standard`：默认模式，适合多数专业内容
+- `strong`：更强的 LinkedIn 视觉排版，明确需要时再使用
+
+排版脚本不会调用 LinkedIn API，也不会读取 token 文件。
+
 ## 预览
 
 生成纯文字 API 预览：
@@ -165,8 +186,10 @@ linkedin-publisher/
 ├── agents/openai.yaml
 ├── config.example.json
 ├── references/linkedin_api.md
+├── references/linkedin_formatting.md
 └── scripts/
     ├── linkedin_auth.py
+    ├── linkedin_format.py
     ├── linkedin_preview_html.py
     └── linkedin_publish.py
 ```

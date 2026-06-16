@@ -1,8 +1,8 @@
 interface:
   display_name: "LinkedIn Publisher"
-  short_description: "Preview and publish LinkedIn posts safely"
+  short_description: "Format, preview, and publish LinkedIn posts safely"
   brand_color: "#0A66C2"
-  default_prompt: "Use $linkedin-publisher to preview and publish this LinkedIn post after I confirm it."
+  default_prompt: "Use $linkedin-publisher to format this draft for LinkedIn, generate a preview, and only publish after I confirm it."
 
 policy:
   allow_implicit_invocation: true
