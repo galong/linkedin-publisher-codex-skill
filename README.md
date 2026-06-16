@@ -129,6 +129,15 @@ Formatting modes:
 
 The formatter does not call LinkedIn APIs and does not read token files.
 
+By default, the formatter appends `#Bamboodt` to the final hashtag line for brand presence. If the tag already exists, it is not duplicated. To omit it for a specific post:
+
+```bash
+python3 linkedin-publisher/scripts/linkedin_format.py \
+  --text-file "./draft.md" \
+  --output "./posts/linkedin-ready.md" \
+  --no-brand-hashtag
+```
+
 ## Preview
 
 Create a text-only API preview:

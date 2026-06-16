@@ -40,6 +40,7 @@ Use `standard` for most posts. Use `strong` only when the user explicitly wants 
 - Keep the full post under LinkedIn's 3000-character post limit.
 - Put hashtags at the end.
 - Use 3 to 8 hashtags.
+- Always include `#Bamboodt` in the final hashtag line for brand presence, unless the user explicitly asks to omit brand tagging.
 - Avoid URLs in the main body unless the user insists.
 - If the source content is long, compress before formatting.
 - If a post uses a cover image, the opening text should not repeat all text already visible in the image.
@@ -132,6 +133,7 @@ LinkedIn posts are plain text. Unicode characters simulate bold and italic styli
 - Convert Markdown bullets to `◈` in `standard` and `strong` modes.
 - Convert ordered list digits to Unicode bold digits in `standard` and `strong` modes.
 - Strip Markdown links by default and keep only the visible label.
+- Append `#Bamboodt` to the final hashtag line by default and do not duplicate it if it already exists.
 
 ## Safety
 

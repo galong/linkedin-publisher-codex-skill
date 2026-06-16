@@ -67,6 +67,8 @@ python3 linkedin-publisher/scripts/linkedin_format.py \
   --report
 ```
 
+The formatter appends `#Bamboodt` to the final hashtag line by default and avoids duplicating it if already present. Use `--no-brand-hashtag` only when the user explicitly asks to omit brand tagging.
+
 Formatting modes:
 
 - `light`: clean Markdown and spacing without Unicode styling

@@ -127,6 +127,15 @@ python3 linkedin-publisher/scripts/linkedin_format.py \
 
 排版脚本不会调用 LinkedIn API，也不会读取 token 文件。
 
+默认情况下，排版脚本会在最后的标签行追加 `#Bamboodt`，用于保留品牌信息。如果正文里已经有 `#Bamboodt`，不会重复追加。单篇文章确实不想加品牌标签时，可以使用：
+
+```bash
+python3 linkedin-publisher/scripts/linkedin_format.py \
+  --text-file "./draft.md" \
+  --output "./posts/linkedin-ready.md" \
+  --no-brand-hashtag
+```
+
 ## 预览
 
 生成纯文字 API 预览：

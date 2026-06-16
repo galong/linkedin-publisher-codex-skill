@@ -12,6 +12,7 @@ from pathlib import Path
 MAX_LINKEDIN_CHARS = 3000
 SEE_MORE_HINT_CHARS = 210
 DIVIDER = "━━━━━━━━━━━━━━━━━━━━━━"
+DEFAULT_BRAND_HASHTAG = "#Bamboodt"
 
 
 class FormatError(RuntimeError):
@@ -115,6 +116,38 @@ def normalize_blank_lines(lines: list[str]) -> list[str]:
     return output
 
 
+def normalized_hashtag(value: str) -> str:
+    tag = value.strip()
+    if not tag:
+        raise FormatError("Brand hashtag cannot be empty")
+    if not tag.startswith("#"):
+        tag = f"#{tag}"
+    if re.search(r"\s", tag):
+        raise FormatError(f"Brand hashtag must not contain spaces: {value}")
+    return tag
+
+
+def append_brand_hashtag(text: str, brand_hashtag: str | None) -> str:
+    if not brand_hashtag:
+        return text
+    tag = normalized_hashtag(brand_hashtag)
+    pattern = re.compile(rf"(?<!\w){re.escape(tag)}(?!\w)", re.IGNORECASE)
+    if pattern.search(text):
+        return text
+
+    lines = text.split("\n")
+    last_nonempty = next((index for index in range(len(lines) - 1, -1, -1) if lines[index].strip()), None)
+    if last_nonempty is None:
+        return tag
+
+    hashtag_line = lines[last_nonempty].strip()
+    if hashtag_line.startswith("#") and all(part.startswith("#") for part in hashtag_line.split()):
+        lines[last_nonempty] = f"{lines[last_nonempty].rstrip()} {tag}"
+        return "\n".join(lines).strip()
+
+    return f"{text.rstrip()}\n\n{tag}"
+
+
 def format_blocks(text: str, mode: str, keep_links: bool) -> str:
     text = text.replace("\r\n", "\n").replace("\r", "\n")
     text = strip_markdown_links(text, keep_links)
@@ -201,6 +234,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Keep markdown link URLs in the body. Default strips URLs and keeps link labels.",
     )
     parser.add_argument(
+        "--brand-hashtag",
+        default=DEFAULT_BRAND_HASHTAG,
+        help=f"Brand hashtag appended to the final hashtag line. Default: {DEFAULT_BRAND_HASHTAG}",
+    )
+    parser.add_argument(
+        "--no-brand-hashtag",
+        action="store_true",
+        help="Do not append the default brand hashtag.",
+    )
+    parser.add_argument(
         "--report",
         action="store_true",
         help="Print character-count and risk report to stderr",
@@ -213,6 +256,10 @@ def main() -> int:
     args = parser.parse_args()
     try:
         formatted = format_blocks(read_source(args), args.mode, args.keep_links)
+        formatted = append_brand_hashtag(
+            formatted,
+            None if args.no_brand_hashtag else args.brand_hashtag,
+        )
         if args.output:
             output = Path(args.output).expanduser()
             output.parent.mkdir(parents=True, exist_ok=True)
