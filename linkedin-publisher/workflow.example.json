@@ -1,0 +1,24 @@
+{
+  "default_group": {
+    "name": "Example LinkedIn Group",
+    "id": "1234567",
+    "url": "https://www.linkedin.com/groups/1234567/"
+  },
+  "group_posting": {
+    "enabled": true,
+    "delay_days_after_profile_post": [
+      1,
+      3
+    ],
+    "target_length_percent": [
+      50,
+      70
+    ],
+    "style": "discussion-led",
+    "use_different_opening": true,
+    "end_with_practitioner_question": true,
+    "preserve_sources": true,
+    "delivery": "manual-confirmation",
+    "auto_submit": false
+  }
+}

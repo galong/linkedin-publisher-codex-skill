@@ -1,8 +1,8 @@
 interface:
   display_name: "LinkedIn Publisher"
-  short_description: "Format, preview, and publish LinkedIn posts safely"
+  short_description: "Publish personal posts and prepare group handoffs safely"
   brand_color: "#0A66C2"
-  default_prompt: "Use $linkedin-publisher to format this draft for LinkedIn, generate a preview, and only publish after I confirm it."
+  default_prompt: "Use $linkedin-publisher to format this draft, preview it, publish to my personal profile only after I confirm, and prepare a differentiated manual group version when configured."
 
 policy:
   allow_implicit_invocation: true

@@ -1,6 +1,6 @@
 # LinkedIn Publisher Codex Skill
 
-`linkedin-publisher` 是一个 Codex Skill，用于在 Codex 中排版、准备、预览并通过 LinkedIn Posts API 发布个人 LinkedIn 动态。
+`linkedin-publisher` 是一个 Codex Skill，用于在 Codex 中排版、准备、预览并通过 LinkedIn Posts API 发布个人 LinkedIn 动态，然后生成差异化的 LinkedIn 群组手动发布版本。
 
 它支持：
 
@@ -11,8 +11,9 @@
 - OAuth 授权辅助
 - 本地 LinkedIn 风格 HTML 可视化预览
 - 通过 `--publish --yes` 做发布确认，避免误发
+- 生成差异化的群组讨论版，并由用户手动提交
 
-当前版本不支持公司主页动态、定时发布、编辑、删除、评论、数据分析、视频、文档或轮播图。
+当前版本不支持自动提交 LinkedIn 群组动态、公司主页动态、定时发布、编辑、删除、评论、数据分析、视频、文档或轮播图。
 
 ## 环境要求
 
@@ -75,6 +76,18 @@ export LINKEDIN_REDIRECT_URI="http://localhost:8080/callback"
 ```
 
 不要提交 `~/.config/linkedin-publisher/config.json`、token 文件、access token、refresh token 或 client secret。
+
+### 可选群组工作流
+
+复制不含密钥的工作流示例，配置默认 LinkedIn 群组：
+
+```bash
+cp linkedin-publisher/workflow.example.json ~/.config/linkedin-publisher/workflow.json
+```
+
+修改群组名称、ID 和 URL。工作区中的 `linkedin-workflow.json` 可以覆盖全局配置；当前任务中的明确要求优先级最高。
+
+群组工作流会在个人主页版本之后生成更短、讨论导向的独立版本并生成预览，但不会自动提交群组动态。用户必须自行检查并手动发布。
 
 ## LinkedIn 授权
 
@@ -186,6 +199,7 @@ python3 linkedin-publisher/scripts/linkedin_publish.py \
 - token 状态和 userinfo 命令不会打印 access token。
 - 图片上传失败时会停止发布，不会创建缺图动态。
 - 当前版本有意不支持 LinkedIn 公司主页发布。
+- LinkedIn 群组动态始终由用户手动提交，Skill 不自动执行最终发布操作。
 
 ## Skill 文件结构
 
@@ -194,6 +208,7 @@ linkedin-publisher/
 ├── SKILL.md
 ├── agents/openai.yaml
 ├── config.example.json
+├── workflow.example.json
 ├── references/linkedin_api.md
 ├── references/linkedin_formatting.md
 └── scripts/

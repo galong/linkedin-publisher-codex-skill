@@ -2,7 +2,7 @@
 
 [中文文档](README.zh-CN.md)
 
-`linkedin-publisher` is a Codex skill for formatting, preparing, previewing, and publishing LinkedIn personal profile posts through the LinkedIn Posts API.
+`linkedin-publisher` is a Codex skill for formatting, preparing, previewing, and publishing LinkedIn personal profile posts through the LinkedIn Posts API, then preparing differentiated manual handoffs for LinkedIn Groups.
 
 It supports:
 
@@ -13,8 +13,9 @@ It supports:
 - OAuth setup helpers
 - local LinkedIn-style HTML previews
 - safe publish confirmation through `--publish --yes`
+- differentiated group versions with manual submission
 
-It does not support LinkedIn organization Page posting, scheduled posts, edits, deletes, comments, analytics, videos, documents, or carousels.
+It does not support automated LinkedIn Group submission, LinkedIn organization Page posting, scheduled posts, edits, deletes, comments, analytics, videos, documents, or carousels.
 
 ## Requirements
 
@@ -77,6 +78,18 @@ export LINKEDIN_REDIRECT_URI="http://localhost:8080/callback"
 ```
 
 Never commit `~/.config/linkedin-publisher/config.json`, token files, access tokens, refresh tokens, or client secrets.
+
+### Optional group workflow
+
+Copy the non-secret workflow example to configure a default LinkedIn Group:
+
+```bash
+cp linkedin-publisher/workflow.example.json ~/.config/linkedin-publisher/workflow.json
+```
+
+Edit the group name, ID, and URL. A workspace-level `linkedin-workflow.json` can override the persistent configuration. Explicit instructions for the current task take highest priority.
+
+The group workflow generates and previews a shorter, discussion-led version after the personal-profile post. It never submits to the group automatically; the user must review and submit the group post manually.
 
 ## Authorize LinkedIn
 
@@ -188,6 +201,7 @@ The script prints the LinkedIn share URN when publishing succeeds.
 - Token status and userinfo commands do not print access token values.
 - Image upload failure stops the post before it is created.
 - Organization Page posting is intentionally out of scope for this version.
+- LinkedIn Group submission is always manual; the skill does not automate the final submit action.
 
 ## Skill Files
 
@@ -195,6 +209,8 @@ The script prints the LinkedIn share URN when publishing succeeds.
 linkedin-publisher/
 ├── SKILL.md
 ├── agents/openai.yaml
+├── config.example.json
+├── workflow.example.json
 ├── references/linkedin_api.md
 ├── references/linkedin_formatting.md
 └── scripts/
